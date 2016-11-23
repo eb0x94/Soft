@@ -29,15 +29,6 @@ section h1 {
     font-size: 1.2em;
 }
 
-table th {
-    background: #DDD;
-    padding: 10px;
-}
-
-table td {
-    padding: 5px 10px;
-    background: #EEE;
-}
 #infoBox, #errorBox, #loadingBox {
     width: 80%;
     margin: 10px auto;
