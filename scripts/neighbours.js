@@ -106,26 +106,27 @@ function startApp() {
     }
 
     function registerUser() {
-        // let userData = {
-        //     username: $('#formRegister input[name=username]').val(),
-        //     password: $('#formRegister input[name=passwd]').val()
-        // };
-        //
-        // $.ajax({
-        //     method: "POST",
-        //     url: baseUrl + "user/" + appKey + "/",
-        //     headers: authHeaders,
-        //     data: userData,
-        //     success: registerSuccess,
-        //     error: handleAjaxError
-        // });
-        //
-        // function registerSuccess(userInfo) {
-        //     saveAuthInSession(userInfo);
-        //     showHideMenuLinks();
-        //     showView('viewHome');
-        //     showInfo('User registration successful.');
-        // }
+        let userData = {
+            username: $('#formRegister input[name=username]').val(),
+            password: $('#formRegister input[name=passwd]').val(),
+            vhod: $('#vhod option:selected').val()
+        };
+
+        $.ajax({
+            method: "POST",
+            url: baseUrl + "user/" + appKey + "/",
+            headers: authHeaders,
+            data: userData,
+            success: registerSuccess,
+            error: handleAjaxError
+        });
+
+        function registerSuccess(userInfo) {
+            saveAuthInSession(userInfo);
+            showHideMenuLinks();
+            showView('viewHome');
+            showInfo('User registration successful.');
+        }
     }
 
     function logoutUser() {
@@ -154,7 +155,10 @@ function startApp() {
         sessionStorage.setItem('authToken', userAuth);
         let userId = userInfo._id;
         sessionStorage.setItem('userId', userId);
+        let userVhod = userInfo.vhod;
+        sessionStorage.setItem('userVhod', userVhod);
         let username = userInfo.username;
+        sessionStorage.setItem('username', username);
         $('#loggedInUser').text(
             "Welcome, " + username + "!");
     }
