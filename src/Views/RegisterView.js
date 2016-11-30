@@ -48,6 +48,7 @@ export default class RegisterView extends Component {
     submitForm(event) {
         event.preventDefault();
         this.props.onsubmit(
-            this.usernameField.value, this.passwordField.value, this.optSelected.value);
+            this.usernameField.value, this.passwordField.value,this.firstNameField.value,
+            this.lastNameField.value, this.telephoneField.value, this.optSelected.value);
     }
 }

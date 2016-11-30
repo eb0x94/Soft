@@ -120,6 +120,7 @@ class App extends Component {
         this.setState({
             username: null
         });
+        sessionStorage.clear();
         this.showHomeView();
     }
 
@@ -128,11 +129,12 @@ class App extends Component {
         function loginSuccess(data) {
             this.showInfo("Login successful");
             this.setState({username: data.username});
+            this.saveAuthInSession(data);
             this.showHomeView();
         }
     }
 
-    register(username, password, selectedValue){
+    register(username, password,firstName, lastName, telephone, selectedValue){
         switch (selectedValue){
             case 'A': selectedValue = 'vhodA';
                 break;
@@ -142,14 +144,22 @@ class App extends Component {
                 break;
             default:break;
         }
-        KinveyRequester.registerUser(username,password, selectedValue).then(registerSuccess.bind(this));
+        KinveyRequester.registerUser(username,password,firstName,lastName,telephone, selectedValue).then(registerSuccess.bind(this));
         function registerSuccess(data) {
             this.showInfo("Register successful");
             this.setState({username: data.username});
+            this.saveAuthInSession(data);
             this.showHomeView();
         }
 
 
+    }
+
+    saveAuthInSession(userInfo){
+        sessionStorage.setItem('authToken', userInfo._kmd.authtoken);
+        sessionStorage.setItem('userId', userInfo._id);
+        sessionStorage.setItem('userVhod', userInfo.vhod);
+        sessionStorage.setItem('username',userInfo.username);
     }
 }
 

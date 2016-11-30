@@ -7,7 +7,6 @@ export default class Footer extends React.Component {
             <div className="footer">
                 (c) 2016 - Apartment building news
             </div>
-
         );
     }
 }

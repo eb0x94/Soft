@@ -16,12 +16,14 @@ let KinveyRequester = (function () {
         });
     }
 
-    function registerUser(username, password, selectedVhodOption) {
+    function registerUser(username,password, firstName, lastName, telephone, vhod) {
+        let userData = JSON.stringify({username: username,password: password, firstName: firstName,
+            lastName: lastName, telephone: telephone, vhod: vhod});
         return $.ajax({
             method: "POST",
-            url: baseUrl + appID,
+            url: baseUrl + "user/" + appID,
             headers: authHeaders,
-            data: JSON.stringify({username, password, selectedVhodOption}),
+            data: userData
         });
     }
 
