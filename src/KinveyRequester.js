@@ -27,9 +27,27 @@ let KinveyRequester = (function () {
         });
     }
 
+    function getAllMessages() {
+       return $.ajax({
+            method: "GET",
+            url: baseUrl + 'appdata/' + appID + "/news?query={}&sort={\"_kmd.lmt\": -1}",
+            headers: getKinveyUserAuthHeaders()
+        })
+    }
+
+
+    function getKinveyUserAuthHeaders() {
+        return {
+            'Authorization': "Kinvey " + sessionStorage.getItem('authToken'),
+        };
+    }
+
+
+
     return {
         loginUser,
-        registerUser
+        registerUser,
+        getAllMessages,
     }
 }());
 

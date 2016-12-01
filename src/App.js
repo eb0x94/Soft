@@ -101,7 +101,19 @@ class App extends Component {
     }
 
     showMessagesView(){
-       this.showView(<MessagesView/>);
+        let currentEntrance = sessionStorage.getItem('userVhod');
+        KinveyRequester.getAllMessages().then(loadMessagesSuccess.bind(this));
+        function loadMessagesSuccess(data) {
+            let currentEntranceMsgs = [];
+            for(let singleMsg of data){
+                if(singleMsg.vhod == currentEntrance){
+                    currentEntranceMsgs.push(singleMsg);
+                }
+            }
+
+            this.showInfo("Messages loaded.");
+            this.showView(<MessagesView messages={currentEntranceMsgs}/>);
+        }
     }
 
     showResidentsView(){
@@ -109,12 +121,13 @@ class App extends Component {
     }
 
     showCreateMessageView(){
-        this.showView(<CreateMessageView/>)
+        this.showView(<CreateMessageView />)
     }
 
-    showPersonalMessagesView(){
+    showPersonalMessagesView() {
         this.showView(<PersonalMessagesView/>);
     }
+
 
     logout(){
         this.setState({
@@ -153,6 +166,33 @@ class App extends Component {
         }
 
 
+    }
+
+    createMessage(title, description){
+        let vhod = sessionStorage.getItem('userVhod');
+        let username = sessionStorage.getItem('username');
+
+        KinveyRequester.createMessage(vhod, title, description, username).then(createMessageSuccess.bind(this));
+
+        function createMessageSuccess() {
+            this.showMessagesView();
+            this.showInfo("Messages loaded.");
+
+        }
+    }
+
+    editMessage(data){
+        alert(data)
+    }
+
+    deletePersonalMessage(messageId){
+        KinveyRequester.deleteMessage(messageId)
+            .then(deleteBookSuccess.bind(this));
+
+        function deleteBookSuccess() {
+            this.showPersonalMessagesView();
+            this.showInfo("Message deleted.");
+        }
     }
 
     saveAuthInSession(userInfo){
