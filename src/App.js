@@ -121,7 +121,7 @@ class App extends Component {
     }
 
     showCreateMessageView(){
-        this.showView(<CreateMessageView />)
+        this.showView(<CreateMessageView onsubmit={this.createMessage.bind(this)}/>)
     }
 
     showPersonalMessagesView() {
