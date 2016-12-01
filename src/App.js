@@ -125,7 +125,21 @@ class App extends Component {
     }
 
     showPersonalMessagesView() {
-        this.showView(<PersonalMessagesView/>);
+        let currentUser = sessionStorage.getItem('username');
+        KinveyRequester.getAllMessages().then(loadMessagesSuccess.bind(this));
+        function loadMessagesSuccess(data) {
+            let personalMessages = [];
+            for(let singleMsg of data){
+                if(singleMsg.username == currentUser){
+                    personalMessages.push(singleMsg);
+                }
+            }
+
+            this.showInfo("Personal messages loaded.");
+            this.showView(<PersonalMessagesView messages={personalMessages}
+            editMessageClicked={this.editMessage.bind(this)}
+            deleteMessageClicked={this.deletePersonalMessage.bind(this)}/>);
+        }
     }
 
 
