@@ -12,6 +12,7 @@ import ResidentsView from './Views/ResidentsView';
 import CreateMessageView from './Views/CreateMessageView';
 import MessagesView from './Views/ShowMessageView';
 import PersonalMessagesView from './Views/ShowPersonalMessagesView';
+import EditMessageView from './Views/EditMessageView';
 
 
 class App extends Component {
@@ -124,7 +125,7 @@ class App extends Component {
         this.showView(<CreateMessageView onsubmit={this.createMessage.bind(this)}/>)
     }
 
-    showPersonalMessagesView() {
+    showPersonalMessagesView(){
         let currentUser = sessionStorage.getItem('username');
         KinveyRequester.getAllMessages().then(loadMessagesSuccess.bind(this));
         function loadMessagesSuccess(data) {
@@ -137,11 +138,10 @@ class App extends Component {
 
             this.showInfo("Personal messages loaded.");
             this.showView(<PersonalMessagesView messages={personalMessages}
-            editMessageClicked={this.editMessage.bind(this)}
+            editMessageClicked={this.prepareMessageForEdit.bind(this)}
             deleteMessageClicked={this.deletePersonalMessage.bind(this)}/>);
         }
     }
-
 
     logout(){
         this.setState({
@@ -195,11 +195,37 @@ class App extends Component {
         }
     }
 
-    editMessage(data){
-        alert(data)
+    prepareMessageForEdit(messageId){
+        KinveyRequester.findMessageById(messageId).then(loadMessageForEditSuccess.bind(this));
+
+        function loadMessageForEditSuccess(message) {
+            this.showView(
+                <EditMessageView
+                    onsubmit={this.editMessage.bind(this)}
+                    messageId={message._id}
+                    title={message.title}
+                    description={message.description}
+                />
+            );
+        }
+    }
+
+    editMessage(messageId, title, description){
+        KinveyRequester.editMessage(messageId, title, description).then(editSuccess.bind(this));
+
+        function editSuccess() {
+            this.showInfo("Message edited.");
+            this.showPersonalMessagesView();
+
+        }
     }
 
     deletePersonalMessage(messageId){
+        let confirmation = confirm('Do you really want to delete this message?');
+
+        if(!confirmation){
+            return;
+        }
         KinveyRequester.deleteMessage(messageId)
             .then(deleteBookSuccess.bind(this));
 

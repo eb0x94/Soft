@@ -27,15 +27,6 @@ let KinveyRequester = (function () {
         });
     }
 
-    function createMessage(vhod, title, description, username) {
-        return $.ajax({
-            method: "POST",
-            url: baseUrl + "appdata/" + appID + "/news",
-            headers: getKinveyUserAuthHeaders(),
-            data: { vhod, title, description, username }
-        });
-    }
-
     function getAllMessages() {
        return $.ajax({
             method: "GET",
@@ -44,6 +35,15 @@ let KinveyRequester = (function () {
         })
     }
 
+    function createMessage(vhod, title, description, username) {
+        return $.ajax({
+            method: "POST",
+            url: baseUrl + "appdata/" + appID + "/news",
+            headers: getKinveyUserAuthHeaders(),
+            data: { vhod, title, description, username }
+        });
+    }
+    
     function deleteMessage(messageId) {
         return $.ajax({
             method: "DELETE",
@@ -52,6 +52,24 @@ let KinveyRequester = (function () {
         });
     }
 
+    function findMessageById(messageId) {
+        return $.ajax({
+            method: "GET",
+            url: baseUrl + "appdata/" + appID + "/news/" + messageId,
+            headers: getKinveyUserAuthHeaders()
+        });
+    }
+
+    function editMessage(messageId, title, description){
+        let vhod = sessionStorage.getItem('userVhod');
+        let username = sessionStorage.getItem('username');
+        return $.ajax({
+            method: "PUT",
+            url: baseUrl + 'appdata/' + appID + '/news/' + messageId,
+            headers: getKinveyUserAuthHeaders(),
+            data: { vhod, title, description, username }
+        });
+    }
 
     function getKinveyUserAuthHeaders() {
         return {
@@ -64,9 +82,11 @@ let KinveyRequester = (function () {
     return {
         loginUser,
         registerUser,
+        getAllMessages,
         createMessage,
         deleteMessage,
-        getAllMessages,
+        findMessageById,
+        editMessage
     }
 }());
 
