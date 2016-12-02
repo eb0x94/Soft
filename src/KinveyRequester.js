@@ -27,12 +27,29 @@ let KinveyRequester = (function () {
         });
     }
 
+    function createMessage(vhod, title, description, username) {
+        return $.ajax({
+            method: "POST",
+            url: baseUrl + "appdata/" + appID + "/news",
+            headers: getKinveyUserAuthHeaders(),
+            data: { vhod, title, description, username }
+        });
+    }
+
     function getAllMessages() {
        return $.ajax({
             method: "GET",
             url: baseUrl + 'appdata/' + appID + "/news?query={}&sort={\"_kmd.lmt\": -1}",
             headers: getKinveyUserAuthHeaders()
         })
+    }
+
+    function deleteMessage(messageId) {
+        return $.ajax({
+            method: "DELETE",
+            url: baseUrl + "appdata/" + appID + "/news/" + messageId,
+            headers: getKinveyUserAuthHeaders()
+        });
     }
 
 
@@ -47,6 +64,8 @@ let KinveyRequester = (function () {
     return {
         loginUser,
         registerUser,
+        createMessage,
+        deleteMessage,
         getAllMessages,
     }
 }());
