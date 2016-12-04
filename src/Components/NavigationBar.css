@@ -1,13 +1,13 @@
 .navigation-bar {
-    background: #DDD;
+    font-family: 'Lato', sans-serif;
+    background: #333333;
     text-align: center;
-    padding: 10px 5px;
+    padding: 10px;
     line-height: 1.5;
-    border-radius: 3px;
-    overflow: auto;
 }
 
 .navigation-bar a {
+    color:white;
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 5px;
