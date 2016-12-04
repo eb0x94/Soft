@@ -4,7 +4,7 @@ let KinveyRequester = (function () {
     const appID = 'kid_Sk8C1M7zx';
     const baseUrl = "https://baas.kinvey.com/";
     const appSecret = 'ac33bf67cd0449b49387cf2863a88b73';
-    const authHeaders = {"Authorization":"Basic " + btoa(appID + ":" + appSecret), "Content-Type":"application/json"};
+    const authHeaders = {"Authorization": "Basic " + btoa(appID + ":" + appSecret), "Content-Type": "application/json"};
 
     function loginUser(username, password) {
         return $.ajax({
@@ -16,9 +16,11 @@ let KinveyRequester = (function () {
         });
     }
 
-    function registerUser(username,password, firstName, lastName, telephone, vhod) {
-        let userData = JSON.stringify({username: username,password: password, firstName: firstName,
-            lastName: lastName, telephone: telephone, vhod: vhod});
+    function registerUser(username, password, firstName, lastName, telephone, vhod) {
+        let userData = JSON.stringify({
+            username: username, password: password, firstName: firstName,
+            lastName: lastName, telephone: telephone, vhod: vhod
+        });
         return $.ajax({
             method: "POST",
             url: baseUrl + "user/" + appID,
@@ -28,7 +30,7 @@ let KinveyRequester = (function () {
     }
 
     function getAllMessages() {
-       return $.ajax({
+        return $.ajax({
             method: "GET",
             url: baseUrl + 'appdata/' + appID + "/news?query={}&sort={\"_kmd.lmt\": -1}",
             headers: getKinveyUserAuthHeaders()
@@ -40,10 +42,10 @@ let KinveyRequester = (function () {
             method: "POST",
             url: baseUrl + "appdata/" + appID + "/news",
             headers: getKinveyUserAuthHeaders(),
-            data: { vhod, title, description, username }
+            data: {vhod, title, description, username}
         });
     }
-    
+
     function deleteMessage(messageId) {
         return $.ajax({
             method: "DELETE",
@@ -60,14 +62,14 @@ let KinveyRequester = (function () {
         });
     }
 
-    function editMessage(messageId, title, description){
+    function editMessage(messageId, title, description) {
         let vhod = sessionStorage.getItem('userVhod');
         let username = sessionStorage.getItem('username');
         return $.ajax({
             method: "PUT",
             url: baseUrl + 'appdata/' + appID + '/news/' + messageId,
             headers: getKinveyUserAuthHeaders(),
-            data: { vhod, title, description, username }
+            data: {vhod, title, description, username}
         });
     }
 
@@ -77,6 +79,15 @@ let KinveyRequester = (function () {
         };
     }
 
+    function assignUserToVhod(firstName, lastName, telephone) {
+        let vhod = sessionStorage.getItem('userVhod');
+        return $.ajax({
+            method: "POST",
+            url: baseUrl + "appdata/" + appID + "/" + vhod,
+            headers: getKinveyUserAuthHeaders(),
+            data: {firstName, lastName, telephone}
+        });
+    }
 
 
     return {
@@ -86,7 +97,8 @@ let KinveyRequester = (function () {
         createMessage,
         deleteMessage,
         findMessageById,
-        editMessage
+        editMessage,
+        assignUserToVhod
     }
 }());
 

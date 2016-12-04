@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 export default class ShowPersonalMessagesView extends Component{
     render(){
+        if(this.props.messages.length == 0){
+            return(<div className="personal-messages-view">
+                <h3>You haven't created any messages yet, click on "Create a message" to make one.</h3>
+            </div>)
+        }
         let personalMsgDiv = this.props.messages.map(msg =>
             <div key={msg._id} className="personal-single-message">
                 <h3>{msg.title}</h3>

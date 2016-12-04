@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import NavigationBar from './Components/NavigationBar';
@@ -16,19 +16,24 @@ import EditMessageView from './Views/EditMessageView';
 
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      username: sessionStorage.getItem('username'),
-        userId: sessionStorage.getItem('userId')
-    };
-  }
-    componentDidMount(){
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: sessionStorage.getItem('username'),
+            userId: sessionStorage.getItem('userId')
+        };
+    }
+
+    componentDidMount() {
 
         // Attach global AJAX "loading" event handlers
         $(document).on({
-            ajaxStart: function() { $("#loadingBox").show() },
-            ajaxStop: function() { $("#loadingBox").hide() }
+            ajaxStart: function () {
+                $("#loadingBox").show()
+            },
+            ajaxStop: function () {
+                $("#loadingBox").hide()
+            }
         });
         this.showHomeView();
 
@@ -37,7 +42,7 @@ class App extends Component {
             this.handleAjaxError.bind(this));
     }
 
-   handleAjaxError(event, response) {
+    handleAjaxError(event, response) {
         let errorMsg = JSON.stringify(response);
         if (response.readyState === 0)
             errorMsg = "Cannot connect due to network error.";
@@ -49,7 +54,7 @@ class App extends Component {
 
     showInfo(message) {
         $('#infoBox').text(message).show();
-        setTimeout(function() {
+        setTimeout(function () {
             $('#infoBox').fadeOut();
         }, 3000);
     }
@@ -60,54 +65,54 @@ class App extends Component {
 
 
     render() {
-    return (
-      <div className="App">
-        <header>
-          <NavigationBar username ={this.state.username}
-          homeClicked={this.showHomeView.bind(this)}
-          loginClicked={this.showLoginView.bind(this)}
-          registerClicked={this.showRegisterView.bind(this)}
-          messagesClicked={this.showMessagesView.bind(this)}
-          logoutClicked={this.logout.bind(this)}
-          createMessageClicked={this.showCreateMessageView.bind(this)}
-          listResidentsClicked={this.showResidentsView.bind(this)}
-          personalMessagesClicked={this.showPersonalMessagesView.bind(this)}/>
-          <div id="loadingBox">Loading...</div>
-          <div id="infoBox">Info msg</div>
-          <div id="errorBox">Error msgs will come here</div>
-        </header>
-        <div id="main">
-        </div>
-        <Footer/>
-      </div>
+        return (
+            <div className="App">
+                <header>
+                    <NavigationBar username={this.state.username}
+                                   homeClicked={this.showHomeView.bind(this)}
+                                   loginClicked={this.showLoginView.bind(this)}
+                                   registerClicked={this.showRegisterView.bind(this)}
+                                   messagesClicked={this.showMessagesView.bind(this)}
+                                   logoutClicked={this.logout.bind(this)}
+                                   createMessageClicked={this.showCreateMessageView.bind(this)}
+                                   listResidentsClicked={this.showResidentsView.bind(this)}
+                                   personalMessagesClicked={this.showPersonalMessagesView.bind(this)}/>
+                    <div id="loadingBox">Loading...</div>
+                    <div id="infoBox">Info msg</div>
+                    <div id="errorBox">Error msgs will come here</div>
+                </header>
+                <div id="main">
+                </div>
+                <Footer/>
+            </div>
 
-    );
-  }
-
-  showView(reactComponent){
-          ReactDOM.render(reactComponent,document.getElementById('main'));
-          $('#errorBox').hide();
-  }
-
-    showHomeView(){
-    this.showView(<HomeView/>);
+        );
     }
 
-    showLoginView(){
+    showView(reactComponent) {
+        ReactDOM.render(reactComponent, document.getElementById('main'));
+        $('#errorBox').hide();
+    }
+
+    showHomeView() {
+        this.showView(<HomeView/>);
+    }
+
+    showLoginView() {
         this.showView(<LoginView onsubmit={this.login.bind(this)}/>);
     }
 
-    showRegisterView(){
-      this.showView(<RegisterView onsubmit={this.register.bind(this)}/>)
+    showRegisterView() {
+        this.showView(<RegisterView onsubmit={this.register.bind(this)}/>)
     }
 
-    showMessagesView(){
+    showMessagesView() {
         let currentEntrance = sessionStorage.getItem('userVhod');
         KinveyRequester.getAllMessages().then(loadMessagesSuccess.bind(this));
         function loadMessagesSuccess(data) {
             let currentEntranceMsgs = [];
-            for(let singleMsg of data){
-                if(singleMsg.vhod == currentEntrance){
+            for (let singleMsg of data) {
+                if (singleMsg.vhod == currentEntrance) {
                     currentEntranceMsgs.push(singleMsg);
                 }
             }
@@ -117,33 +122,33 @@ class App extends Component {
         }
     }
 
-    showResidentsView(){
+    showResidentsView() {
         this.showView(<ResidentsView/>);
     }
 
-    showCreateMessageView(){
+    showCreateMessageView() {
         this.showView(<CreateMessageView onsubmit={this.createMessage.bind(this)}/>)
     }
 
-    showPersonalMessagesView(){
+    showPersonalMessagesView() {
         let currentUser = sessionStorage.getItem('username');
         KinveyRequester.getAllMessages().then(loadMessagesSuccess.bind(this));
         function loadMessagesSuccess(data) {
             let personalMessages = [];
-            for(let singleMsg of data){
-                if(singleMsg.username == currentUser){
+            for (let singleMsg of data) {
+                if (singleMsg.username == currentUser) {
                     personalMessages.push(singleMsg);
                 }
             }
 
             this.showInfo("Personal messages loaded.");
             this.showView(<PersonalMessagesView messages={personalMessages}
-            editMessageClicked={this.prepareMessageForEdit.bind(this)}
-            deleteMessageClicked={this.deletePersonalMessage.bind(this)}/>);
+                                                editMessageClicked={this.prepareMessageForEdit.bind(this)}
+                                                deleteMessageClicked={this.deletePersonalMessage.bind(this)}/>);
         }
     }
 
-    logout(){
+    logout() {
         this.setState({
             username: null
         });
@@ -151,8 +156,8 @@ class App extends Component {
         this.showHomeView();
     }
 
-    login(username, password){
-        KinveyRequester.loginUser(username,password).then(loginSuccess.bind(this));
+    login(username, password) {
+        KinveyRequester.loginUser(username, password).then(loginSuccess.bind(this));
         function loginSuccess(data) {
             this.showInfo("Login successful");
             this.setState({username: data.username});
@@ -161,28 +166,38 @@ class App extends Component {
         }
     }
 
-    register(username, password,firstName, lastName, telephone, selectedValue){
-        switch (selectedValue){
-            case 'A': selectedValue = 'vhodA';
+    register(username, password, firstName, lastName, telephone, selectedValue) {
+        switch (selectedValue) {
+            case 'A':
+                selectedValue = 'vhodA';
                 break;
-            case 'B': selectedValue = 'vhodB';
+            case 'B':
+                selectedValue = 'vhodB';
                 break;
-            case 'C': selectedValue = 'vhodC';
+            case 'C':
+                selectedValue = 'vhodC';
                 break;
-            default:break;
+            default:
+                break;
         }
-        KinveyRequester.registerUser(username,password,firstName,lastName,telephone, selectedValue).then(registerSuccess.bind(this));
+        KinveyRequester.registerUser(username, password, firstName, lastName, telephone, selectedValue).then(registerSuccess.bind(this));
         function registerSuccess(data) {
             this.showInfo("Register successful");
             this.setState({username: data.username});
             this.saveAuthInSession(data);
             this.showHomeView();
+
+            KinveyRequester.assignUserToVhod(firstName, lastName, telephone).then(assignSuccess.bind(this));
+
+            function assignSuccess() {
+                this.showInfo("You are registered to entrance " + selectedValue);
+            }
         }
 
 
     }
 
-    createMessage(title, description){
+    createMessage(title, description) {
         let vhod = sessionStorage.getItem('userVhod');
         let username = sessionStorage.getItem('username');
 
@@ -195,7 +210,7 @@ class App extends Component {
         }
     }
 
-    prepareMessageForEdit(messageId){
+    prepareMessageForEdit(messageId) {
         KinveyRequester.findMessageById(messageId).then(loadMessageForEditSuccess.bind(this));
 
         function loadMessageForEditSuccess(message) {
@@ -210,7 +225,7 @@ class App extends Component {
         }
     }
 
-    editMessage(messageId, title, description){
+    editMessage(messageId, title, description) {
         KinveyRequester.editMessage(messageId, title, description).then(editSuccess.bind(this));
 
         function editSuccess() {
@@ -220,10 +235,10 @@ class App extends Component {
         }
     }
 
-    deletePersonalMessage(messageId){
+    deletePersonalMessage(messageId) {
         let confirmation = confirm('Do you really want to delete this message?');
 
-        if(!confirmation){
+        if (!confirmation) {
             return;
         }
         KinveyRequester.deleteMessage(messageId)
@@ -235,11 +250,11 @@ class App extends Component {
         }
     }
 
-    saveAuthInSession(userInfo){
+    saveAuthInSession(userInfo) {
         sessionStorage.setItem('authToken', userInfo._kmd.authtoken);
         sessionStorage.setItem('userId', userInfo._id);
         sessionStorage.setItem('userVhod', userInfo.vhod);
-        sessionStorage.setItem('username',userInfo.username);
+        sessionStorage.setItem('username', userInfo.username);
     }
 }
 
