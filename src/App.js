@@ -123,7 +123,7 @@ class App extends Component {
     }
 
     showResidentsView() {
-        this.showView(<ResidentsView/>);
+        this.showView(<ResidentsView onsubmit={this.getAllResidents.bind(this)}/>);
     }
 
     showCreateMessageView() {
@@ -247,6 +247,39 @@ class App extends Component {
         function deleteBookSuccess() {
             this.showPersonalMessagesView();
             this.showInfo("Message deleted.");
+        }
+    }
+
+    getAllResidents(userVhod){
+        $('.residents').empty();
+        switch (userVhod) {
+            case 'A':
+                userVhod = 'vhodA';
+                break;
+            case 'B':
+                userVhod = 'vhodB';
+                break;
+            case 'C':
+                userVhod = 'vhodC';
+                break;
+            default:
+                break;
+        }
+        KinveyRequester.getCurrentVhod(userVhod).then(userVhodSuccess.bind(this));
+
+        function userVhodSuccess(allUsersInCurrentEntrance) {
+            let table = $('<table id="residents-table">');
+            let headingTr = $('<th>First Name</th><th>Last Name</th><th>Telephone</th>');
+            table.append(headingTr);
+
+            for(let singleUser of allUsersInCurrentEntrance){
+                let tr = $('<tr>');
+                tr.append(`<td>${singleUser.firstName}</td><td>${singleUser.lastName}</td>
+                <td>${singleUser.telephone}</td>`);
+                table.append(tr);
+            }
+
+            $('.residents').append(table);
         }
     }
 

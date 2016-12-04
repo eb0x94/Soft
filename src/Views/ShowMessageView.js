@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class MessagesView extends Component{
     render(){
-        if(this.props.messages.length == 0){
+        if(this.props.messages.length === 0){
             return(
                 <div className="messages-view">
                     <h3>The neighbours message board is empty.</h3>

@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 let KinveyRequester = (function () {
+    const guestToken = 'a6af80bb-c764-4e33-869b-93acd18c10c4.NLLefvn6WDIr0FfQk5MjPZL/r0bkU6Ig/al1Oozhykc=';
     const appID = 'kid_Sk8C1M7zx';
     const baseUrl = "https://baas.kinvey.com/";
     const appSecret = 'ac33bf67cd0449b49387cf2863a88b73';
@@ -74,9 +75,23 @@ let KinveyRequester = (function () {
     }
 
     function getKinveyUserAuthHeaders() {
+        let token = sessionStorage.getItem('authToken');
+        if(!token){
+            return {
+                'Authorization': "Kinvey " + guestToken
+            };
+        }
         return {
-            'Authorization': "Kinvey " + sessionStorage.getItem('authToken'),
+            'Authorization': "Kinvey " + token
         };
+    }
+
+    function getCurrentVhod(userVhod) {
+        return $.ajax({
+            method: "GET",
+            url: baseUrl + 'appdata/' + appID + "/" + userVhod,
+            headers: getKinveyUserAuthHeaders()
+        })
     }
 
     function assignUserToVhod(firstName, lastName, telephone) {
@@ -98,7 +113,8 @@ let KinveyRequester = (function () {
         deleteMessage,
         findMessageById,
         editMessage,
-        assignUserToVhod
+        assignUserToVhod,
+        getCurrentVhod
     }
 }());
 

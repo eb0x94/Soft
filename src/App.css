@@ -22,3 +22,18 @@
 #main {
   margin: 0 10px 20px 10px;
 }
+
+table{
+  margin: 0 auto;
+  padding: 10px;
+}
+
+table th {
+  background: #DDD;
+  padding: 10px;
+}
+
+table td {
+  padding: 5px 10px;
+  background: #EEE;
+}
