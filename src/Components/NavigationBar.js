@@ -23,7 +23,7 @@ export default class NavigationBar extends React.Component {
                 <a href="#" onClick={this.props.personalMessagesClicked}>My messages</a>
                 <a href="#" onClick={this.props.createMessageClicked}>Create a message</a>
                 <a href="#" onClick={this.props.logoutClicked}>Logout</a>
-                <span className="loggedInUser">Welcome, {this.props.username}</span>
+                <span className="loggedInUser">Welcome, {this.props.username}!</span>
             </div>
             );
         }
