@@ -1,0 +1,21 @@
+.messages-view{
+    font-family: 'Open Sans', sans-serif;
+    margin: auto;
+    width: 50%;
+}
+
+.single-message{
+    margin-top: 0.2em;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.message-body{
+    padding-left:10px;
+    padding-bottom:10px;
+}
+
+.username{
+    color: #7CB3E9;
+    text-decoration: underline;
+}

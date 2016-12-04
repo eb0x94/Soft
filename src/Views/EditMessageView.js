@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/EditMessageView.css';
 
 export default class EditMessageView extends Component {
     render() {

@@ -1,4 +1,6 @@
 import React from 'react';
+import '../styles/HomeView.css';
+
 export default function HomeView() {
     return (<div className="home-view">
         <h1>Welcome to home page</h1>

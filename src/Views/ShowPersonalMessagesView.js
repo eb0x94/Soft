@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/ShowPersonalMessagesView.css';
 
 export default class ShowPersonalMessagesView extends Component{
     render(){
@@ -9,9 +10,11 @@ export default class ShowPersonalMessagesView extends Component{
         }
         let personalMsgDiv = this.props.messages.map(msg =>
             <div key={msg._id} className="personal-single-message">
+                <div className="message-body">
                 <h3>{msg.title}</h3>
                 <p>{msg.description}</p>
                 <span>{this.getActions(msg)}</span>
+                </div>
             </div>);
         return(
             <div className="personal-messages-view">

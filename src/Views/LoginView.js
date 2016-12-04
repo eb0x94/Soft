@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/LoginView.css';
 
 export default class LoginView extends Component {
     render() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/RegisterView.css';
 
 export default class RegisterView extends Component {
     render() {

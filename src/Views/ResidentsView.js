@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../styles/ResidentsView.css';
 
 export default class ResidentsView extends Component {
     render() {
