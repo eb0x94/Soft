@@ -33,7 +33,7 @@ export default class RegisterView extends Component {
                 </label>
                 <label>
                     <div>Choose your entrance:</div>
-                    <select defaultValue="A" ref={(input) => this.optSelected = input }>
+                    <select defaultValue="A" required ref={(input) => this.optSelected = input }>
                         <option defaultValue="vhodA">A</option>
                         <option defaultValue="vhodB">B</option>
                         <option defaultValue="vhodC">C</option>

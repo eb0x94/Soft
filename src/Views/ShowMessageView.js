@@ -21,6 +21,7 @@ export default class MessagesView extends Component{
         return(
             <div className="messages-view">
             <h2>Neighbours messages are shown below</h2>
+                <p>Note that the notes will be filtered, meaning that the newest come on top. :)</p>
                 {msgDiv}
             </div>
         );

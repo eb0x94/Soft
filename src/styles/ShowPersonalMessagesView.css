@@ -4,10 +4,15 @@
     width: 50%;
 }
 
+.personal-messages-view>h2{
+    text-align:center;
+}
+
 .personal-single-message{
     border: 1px solid black;
     border-radius: 5px;
     background: -moz-linear-gradient(314deg, #FFFAFA 22%, #FFFAFA 72%, #BFBFBF 97%, #BFBFBF 100%);
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #fffafa), color-stop(100%, #bfbfbf));
 }
 
 .message-body{

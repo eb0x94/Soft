@@ -14,7 +14,7 @@ export default class CreateMessageView extends Component{
                 </label>
                 <label>
                     <div>Description:</div>
-                    <textarea name="description" rows="10"
+                    <textarea name="description" rows="15" cols="50"
                               ref={e => this.descriptionField = e} />
                 </label>
                 <div>

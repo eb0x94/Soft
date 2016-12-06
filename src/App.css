@@ -10,13 +10,13 @@
 }
 
 #loadingBox {
-  background: #7CB3E9;
+  background: rgb(6,94,225);
 }
 #infoBox {
-  background: #393;
+  background: rgb(0, 145, 0);
 }
 #errorBox {
-  background: #F50;
+  background: rgb(248,67,35);
 }
 
 #main {

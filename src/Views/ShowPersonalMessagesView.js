@@ -19,6 +19,7 @@ export default class ShowPersonalMessagesView extends Component{
         return(
             <div className="personal-messages-view">
                 <h2>Your personal messages are shown below</h2>
+                <p>Note that the notes will be filtered, meaning that the newest come on top. :)</p>
                 {personalMsgDiv}
             </div>
         );
