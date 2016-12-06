@@ -153,6 +153,7 @@ class App extends Component {
             username: null
         });
         sessionStorage.clear();
+        this.showInfo("Logged out successfully.");
         this.showHomeView();
     }
 
@@ -180,14 +181,16 @@ class App extends Component {
             default:
                 break;
         }
+
         KinveyRequester.registerUser(username, password, firstName, lastName, telephone, selectedValue).then(registerSuccess.bind(this));
+
         function registerSuccess(data) {
             this.showInfo("Register successful");
             this.setState({username: data.username});
             this.saveAuthInSession(data);
             this.showHomeView();
 
-            KinveyRequester.assignUserToVhod(firstName, lastName, telephone).then(assignSuccess.bind(this));
+            KinveyRequester.assignUserToVhod(firstName, lastName,).then(assignSuccess.bind(this));
 
             function assignSuccess() {
                 this.showInfo("You are registered to entrance " + selectedValue);
@@ -250,7 +253,7 @@ class App extends Component {
         }
     }
 
-    getAllResidents(userVhod){
+    getAllResidents(userVhod) {
         $('.residents').empty();
         switch (userVhod) {
             case 'A':
@@ -272,7 +275,7 @@ class App extends Component {
             let headingTr = $('<th>First Name</th><th>Last Name</th><th>Telephone</th>');
             table.append(headingTr);
 
-            for(let singleUser of allUsersInCurrentEntrance){
+            for (let singleUser of allUsersInCurrentEntrance) {
                 let tr = $('<tr>');
                 tr.append(`<td>${singleUser.firstName}</td><td>${singleUser.lastName}</td>
                 <td>${singleUser.telephone}</td>`);

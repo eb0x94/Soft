@@ -11,14 +11,14 @@ export default class ShowPersonalMessagesView extends Component{
         let personalMsgDiv = this.props.messages.map(msg =>
             <div key={msg._id} className="personal-single-message">
                 <div className="message-body">
-                <h3>{msg.title}</h3>
+                <h4>{msg.title}</h4>
                 <p>{msg.description}</p>
                 <span>{this.getActions(msg)}</span>
                 </div>
             </div>);
         return(
             <div className="personal-messages-view">
-                <h1>Your personal messages are shown below</h1>
+                <h2>Your personal messages are shown below</h2>
                 {personalMsgDiv}
             </div>
         );

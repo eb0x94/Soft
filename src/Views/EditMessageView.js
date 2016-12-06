@@ -5,7 +5,7 @@ export default class EditMessageView extends Component {
     render() {
         return (
             <form className="edit-message-form" onSubmit={this.submitForm.bind(this)}>
-                <h1>Edit Message</h1>
+                <h2>Edit Message</h2>
                 <label>
                     <div>Title:</div>
                     <input type="text" name="title" required

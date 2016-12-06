@@ -13,14 +13,14 @@ export default class MessagesView extends Component{
         let msgDiv = this.props.messages.map(msg =>
             <div key={msg._id} className="single-message">
                 <div className="message-body">
-                <h3>{msg.title}</h3>
+                <h4 className="message-title">{msg.title}</h4>
                 <p>{msg.description}</p>
                 <span>posted by <span className="username">{msg.username}</span></span>
                 </div>
             </div>);
         return(
             <div className="messages-view">
-            <h1>Neighbours messages are shown below</h1>
+            <h2>Neighbours messages are shown below</h2>
                 {msgDiv}
             </div>
         );

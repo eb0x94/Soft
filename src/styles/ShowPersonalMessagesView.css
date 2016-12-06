@@ -5,12 +5,17 @@
 }
 
 .personal-single-message{
-    margin-top: 0.2em;
     border: 1px solid black;
     border-radius: 5px;
+    background: -moz-linear-gradient(314deg, #FFFAFA 22%, #FFFAFA 72%, #BFBFBF 97%, #BFBFBF 100%);
 }
 
 .message-body{
     padding-left:10px;
     padding-bottom:10px;
 }
+
+.message-body>button, .message-body>h4 {
+    text-align: center;
+}
+
